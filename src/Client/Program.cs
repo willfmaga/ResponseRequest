@@ -29,25 +29,25 @@
             {
                 IRequestClient<ISimpleRequest, ISimpleResponse> client = CreateRequestClient(busControl);
 
-                for (;;)
+                for (; ; )
                 {
-                    Console.Write("Enter customer id (quit exits): ");
-                    string customerId = Console.ReadLine();
-                    if (customerId == "quit")
+                    Console.Write("Entre com o codigo do Posto (quit exits): ");
+                    string postoId = Console.ReadLine();
+                    if (postoId == "quit")
                         break;
 
                     // this is run as a Task to avoid weird console application issues
                     Task.Run(async () =>
                     {
-                        ISimpleResponse response = await client.Request(new SimpleRequest(customerId));
+                        ISimpleResponse response = await client.Request(new SimpleRequest(postoId));
 
-                        Console.WriteLine("Customer Name: {0}", response.CusomerName);
+                        Console.WriteLine($"Nome do Posto é : {response.PostoNome}");
                     }).Wait();
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception!!! OMG!!! {0}", ex);
+                Console.WriteLine("Deu ruim!!! OMG!!! {0}", ex);
             }
             finally
             {
@@ -99,12 +99,14 @@
         class SimpleRequest :
             ISimpleRequest
         {
-            readonly string _customerId;
+            private readonly string _postoId;
+            
             readonly DateTime _timestamp;
 
-            public SimpleRequest(string customerId)
+            public SimpleRequest(string postoID)
             {
-                _customerId = customerId;
+                _postoId = postoID;
+                
                 _timestamp = DateTime.UtcNow;
             }
 
@@ -113,10 +115,12 @@
                 get { return _timestamp; }
             }
 
-            public string CustomerId
+            public string PostoID
             {
-                get { return _customerId; }
+                get { return _postoId; }
             }
+
+ 
         }
     }
 }

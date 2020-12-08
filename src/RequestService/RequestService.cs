@@ -18,7 +18,7 @@
 
         public bool Start(HostControl hostControl)
         {
-            _log.Info("Creating bus...");
+            _log.Info("Criando o bus...");
 
             _busControl = Bus.Factory.CreateUsingRabbitMq(x =>
             {
@@ -32,7 +32,7 @@
                     e => { e.Consumer<RequestConsumer>(); });
             });
 
-            _log.Info("Starting bus...");
+            _log.Info("Inicializando o bus...");
 
             TaskUtil.Await(() => _busControl.StartAsync());
 
@@ -41,7 +41,7 @@
 
         public bool Stop(HostControl hostControl)
         {
-            _log.Info("Stopping bus...");
+            _log.Info("Parando o bus...");
 
             _busControl?.Stop();
 

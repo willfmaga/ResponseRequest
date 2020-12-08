@@ -13,6 +13,8 @@
         /// <summary>
         /// The customer id for the request (or whatever data you want here)
         /// </summary>
-        string CustomerId { get; }
+        string PostoID { get; }
+
+
     }
 }
